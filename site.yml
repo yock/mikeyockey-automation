@@ -4,14 +4,13 @@
   vars_files:
     - vault.yml
   tasks:
-    - name: Clone project repo
-      git:
-        repo: ssh://git@github.com/yock/mikeyockey-automation.git
-        dest: ~/src
-
     - name: Pull Docker image for database
       docker_image:
         name: postgres:9
+
+    - name: Pull Docker image for Nginx
+      docker_image:
+        name: nginx:mainline
 
     - name: Pull Docker image for site
       docker_image:
