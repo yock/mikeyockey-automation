@@ -10,7 +10,7 @@
 
     - name: Pull Docker image for Nginx
       docker_image:
-        name: nginx:mainline
+        name: yock/mikeyockey-proxy:latest
 
     - name: Pull Docker image for site
       docker_image:
