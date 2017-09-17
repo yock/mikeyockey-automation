@@ -7,14 +7,17 @@
     - name: Pull Docker image for database
       docker_image:
         name: postgres:9
+        force: yes
 
     - name: Pull Docker image for Nginx
       docker_image:
         name: yock/mikeyockey-proxy:latest
+        force: yes
 
     - name: Pull Docker image for site
       docker_image:
         name: yock/mikeyockey-rails:latest
+        force: yes
 
     - name: Start Database
       docker_container:
@@ -59,8 +62,6 @@
         log_driver: journald
         volumes:
           - rails-assets:/mikeyockey-rails/public/assets
-        published_ports:
-          - 80:3000
         links:
           - "postgres:postgres"
         env:
@@ -68,3 +69,16 @@
           SECRET_KEY_BASE: "{{ secret_key_base }}"
           RAILS_LOG_TO_STDOUT: true
           RAILS_SERVE_STATIC_FILES: true
+
+    - name: Start Nginx
+      docker_container:
+        name: proxy
+        image: yock/mikeyockey-proxy:latest
+        volumes:
+          rails-assets:/usr/share/nginx/html/assets
+        links:
+          - "rails:rails"
+        log_driver: journald
+        published_ports:
+          - "80:80"
+          - "443:443"
