@@ -33,7 +33,7 @@ http {
 
     server {
       listen 80;
-      server_name localhost mikeyockey-rails;
+      server_name rails.mikeyockey.com;
       root /usr/share/nginx/html;
       try_files $uri @mikeyockey-rails;
 
